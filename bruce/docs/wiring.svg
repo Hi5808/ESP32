@@ -1,37 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560" font-family="monospace" font-size="13">
   <rect x="0" y="0" width="900" height="560" fill="#ffffff"/>
-  <text x="20" y="24" font-size="16" font-weight="bold" fill="#111">Bruce fork - proposed wiring (ESP32-S3-DevKitC-1 N16R8)</text>
+  <text x="20" y="24" font-size="16" font-weight="bold" fill="#111">Bruce fork - wiring (ESP32-S3-DevKitC-1 N16R8)</text>
 
   <!-- ESP32-S3 board -->
   <rect x="40" y="50" width="260" height="470" rx="6" fill="#eef4ff" stroke="#1d4ed8" stroke-width="2"/>
   <text x="170" y="72" text-anchor="middle" font-weight="bold" fill="#1d4ed8">ESP32-S3-DevKitC-1 N16R8</text>
-  <text x="50" y="410" fill="#555">3V3 / GND to all modules</text>
-  <text x="50" y="428" fill="#555">(power not drawn per pin)</text>
-  <text x="50" y="446" fill="#555">GPIO 33-37 = PSRAM, unused</text>
-  <text x="50" y="464" fill="#555">GPIO 48 = onboard RGB LED</text>
+  <text x="50" y="410" fill="#555">3V3 -> nRF24, CC1101, OLED VCC</text>
+  <text x="50" y="428" fill="#555">GND -> nRF24, CC1101, OLED GND</text>
+  <text x="50" y="454" fill="#555">Avoid: 0/3/45/46 strapping,</text>
+  <text x="50" y="470" fill="#555">26-37 PSRAM/flash, 48 RGB LED</text>
 
-  <!-- ESP32 GPIO pins (right edge x=300) -->
+  <!-- ESP32 GPIO labels (right edge x=300) -->
   <g fill="#111">
     <text x="236" y="84" text-anchor="end">GPIO12 SCK</text>
     <text x="236" y="112" text-anchor="end">GPIO11 MOSI</text>
     <text x="236" y="140" text-anchor="end">GPIO13 MISO</text>
-    <text x="236" y="168" text-anchor="end">GPIO10 CS_CC</text>
+    <text x="236" y="168" text-anchor="end">GPIO15 CS_CC</text>
     <text x="236" y="196" text-anchor="end">GPIO4 GDO0</text>
-    <text x="236" y="224" text-anchor="end">GPIO5 GDO2</text>
-    <text x="236" y="252" text-anchor="end">GPIO9 CS_NRF</text>
-    <text x="236" y="280" text-anchor="end">GPIO8 CE</text>
-    <text x="236" y="308" text-anchor="end">GPIO6 IRQ</text>
-    <text x="236" y="336" text-anchor="end">GPIO41 SDA</text>
-    <text x="236" y="364" text-anchor="end">GPIO42 SCL</text>
+    <text x="236" y="252" text-anchor="end">GPIO10 CS_NRF</text>
+    <text x="236" y="280" text-anchor="end">GPIO9 CE</text>
+    <text x="236" y="336" text-anchor="end">GPIO8 SDA</text>
+    <text x="236" y="364" text-anchor="end">GPIO7 SCL</text>
   </g>
   <g fill="#1d4ed8">
     <circle cx="300" cy="80" r="4"/><circle cx="300" cy="108" r="4"/><circle cx="300" cy="136" r="4"/>
-    <circle cx="300" cy="164" r="4"/><circle cx="300" cy="192" r="4"/><circle cx="300" cy="220" r="4"/>
-    <circle cx="300" cy="248" r="4"/><circle cx="300" cy="276" r="4"/><circle cx="300" cy="304" r="4"/>
+    <circle cx="300" cy="164" r="4"/><circle cx="300" cy="192" r="4"/>
+    <circle cx="300" cy="248" r="4"/><circle cx="300" cy="276" r="4"/>
     <circle cx="300" cy="332" r="4"/><circle cx="300" cy="360" r="4"/>
   </g>
 
-  <!-- Wires: shared SPI bus (SCK / MOSI / MISO) to both radios -->
+  <!-- Shared SPI bus (SCK / MOSI / MISO) to both radios -->
   <g stroke="#7c3aed" stroke-width="2" fill="none">
     <path d="M300 80 L600 90"/>
     <path d="M300 80 L600 296"/>
@@ -40,16 +38,14 @@
     <path d="M300 136 L600 146"/>
     <path d="M300 136 L600 344"/>
   </g>
-  <!-- Wires: dedicated control lines -->
+  <!-- Radio control lines -->
   <g stroke="#dc2626" stroke-width="2" fill="none">
     <path d="M300 164 L600 174"/>
     <path d="M300 192 L600 202"/>
-    <path d="M300 220 L600 230"/>
     <path d="M300 248 L600 368"/>
     <path d="M300 276 L600 392"/>
-    <path d="M300 304 L600 416"/>
   </g>
-  <!-- Wires: I2C to OLED -->
+  <!-- I2C to OLED -->
   <g stroke="#059669" stroke-width="2" fill="none">
     <path d="M300 332 L600 485"/>
     <path d="M300 360 L600 505"/>
@@ -64,7 +60,7 @@
     <text x="612" y="151">MISO</text>
     <text x="612" y="179">CSN</text>
     <text x="612" y="207">GDO0</text>
-    <text x="612" y="235">GDO2</text>
+    <text x="612" y="235">GDO2 (not wired)</text>
   </g>
 
   <!-- nRF24L01 module -->
@@ -76,7 +72,7 @@
     <text x="612" y="348">MISO</text>
     <text x="612" y="372">CSN</text>
     <text x="612" y="396">CE</text>
-    <text x="612" y="420">IRQ</text>
+    <text x="612" y="420">IRQ (not wired)</text>
   </g>
 
   <!-- OLED module -->
@@ -90,9 +86,9 @@
   <!-- Module pin dots -->
   <g fill="#111">
     <circle cx="600" cy="90" r="3"/><circle cx="600" cy="118" r="3"/><circle cx="600" cy="146" r="3"/>
-    <circle cx="600" cy="174" r="3"/><circle cx="600" cy="202" r="3"/><circle cx="600" cy="230" r="3"/>
+    <circle cx="600" cy="174" r="3"/><circle cx="600" cy="202" r="3"/>
     <circle cx="600" cy="296" r="3"/><circle cx="600" cy="320" r="3"/><circle cx="600" cy="344" r="3"/>
-    <circle cx="600" cy="368" r="3"/><circle cx="600" cy="392" r="3"/><circle cx="600" cy="416" r="3"/>
+    <circle cx="600" cy="368" r="3"/><circle cx="600" cy="392" r="3"/>
     <circle cx="600" cy="485" r="3"/><circle cx="600" cy="505" r="3"/>
   </g>
 

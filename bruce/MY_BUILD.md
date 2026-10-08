@@ -18,29 +18,29 @@ Bruce is licensed **AGPL-3.0** (see `LICENSE`). Any build I distribute must stay
 - Radios: `USE_CC1101_VIA_SPI` and `USE_NRF24_VIA_SPI` are pin-configured per board (see `boards/lilygo-t-display-s3/pins_arduino.h`).
 - Closest existing env: `esp32-s3-devkitc-1-psram` (N16R8) in `platformio.ini`, which uses `boards/ESP-General`.
 
-## Proposed pin plan (NOT applied yet)
+## Pin plan (from my wiring list)
 
 Schematic: [docs/wiring.svg](docs/wiring.svg)
 
-Avoids strapping pins (0, 3, 45, 46), USB (19, 20), and the PSRAM/flash-internal pins (26–37 on N16R8).
+Power: 3V3 to nRF24, CC1101, and OLED VCC; GND to all of them.
 
 | Function | GPIO |
 |---|---|
-| SPI SCK (shared) | 12 |
+| SPI SCK (shared nRF24 + CC1101) | 12 |
 | SPI MOSI (shared) | 11 |
 | SPI MISO (shared) | 13 |
-| CC1101 CS | 10 |
+| CC1101 CSN | 15 |
 | CC1101 GDO0 | 4 |
-| CC1101 GDO2 | 5 |
-| nRF24 CS | 9 |
-| nRF24 CE | 8 |
-| nRF24 IRQ | 6 |
-| OLED I2C SDA | 41 |
-| OLED I2C SCL | 42 |
+| CC1101 GDO2 (optional, not wired) | - |
+| nRF24 CSN | 10 |
+| nRF24 CE | 9 |
+| nRF24 IRQ (optional, not wired) | - |
+| OLED SDA | 8 |
+| OLED SCL | 7 |
 
-GPIO 48 is the on-board RGB LED on DevKitC-1; GPIO 47 is spare.
+Avoids strapping pins (0, 3, 45, 46), USB (19, 20), and PSRAM/flash-internal pins (26-37 on N16R8). GPIO 48 is the on-board RGB LED.
 
-Confirm these match your physical wiring before flashing.
+Note: the 1.3" OLED is usually SH1106, which the Adafruit SSD1306 library does not drive correctly. Use U8g2 with an SH1106 driver, or check the controller on your module.
 
 ## Open decision
 
