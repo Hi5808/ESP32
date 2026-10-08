@@ -44,9 +44,7 @@ Note: the 1.3" OLED is usually SH1106, which the Adafruit SSD1306 library does n
 
 ## Open decision
 
-How to drive the OLED:
-1. Add a U8g2 (SH1106/SSD1306) I2C display backend alongside TFT_eSPI.
-2. Run the device headless and use only the radios through the web/serial interface.
+Resolved: the OLED uses the existing LovyanGFX backend (see Firmware status), not U8g2. Headless is no longer the default for this env.
 
 ## Firmware status
 
@@ -54,7 +52,8 @@ How to drive the OLED:
 - Radios: CC1101 enabled (CSN 15, GDO0 4). nRF24 enabled (CSN 10, CE 9). Shared SPI on 12/11/13.
 - I2C bus: `GROVE_SDA=8`, `GROVE_SCL=7`. The firmware's I2C bus config uses these macros.
 - **Not compiled yet.** PlatformIO's tool download fails TLS verification in this sandbox (the proxy CA is not trusted by its HTTP client). Build it on your own machine with `pio run -e my-s3-n16r8`.
-- **Not implemented:** the OLED display driver. The 1.3" I2C OLED will not display anything until a U8g2 SH1106 backend is added.
+- **Display:** enabled through the LovyanGFX backend (`USE_LOVYANGFX`, `Panel_SH1106`, `Bus_I2C`, SDA 8, SCL 7, 128x64). LovyanGFX is pinned to develop commit `11cf6a2`. This is **unverified**: it hasn't been compiled or run on hardware.
+- **Layout:** Bruce's UI was designed for 240x135. About 775 references use the screen-size variables and about 47 hard-code 240/135/320, so expect menus to need tuning for 128x64.
 
 ## Known risk
 
