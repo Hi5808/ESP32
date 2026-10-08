@@ -47,3 +47,15 @@ Note: the 1.3" OLED is usually SH1106, which the Adafruit SSD1306 library does n
 How to drive the OLED:
 1. Add a U8g2 (SH1106/SSD1306) I2C display backend alongside TFT_eSPI.
 2. Run the device headless and use only the radios through the web/serial interface.
+
+## Firmware status
+
+- Env: `my-s3-n16r8` in `boards/my-s3-n16r8/my-s3-n16r8.ini`. It extends `esp32-s3-devkitc-1-psram` and overrides the ESP-General pin defines with `-U` then `-D`, so the upstream board is untouched.
+- Radios: CC1101 enabled (CSN 15, GDO0 4). nRF24 enabled (CSN 10, CE 9). Shared SPI on 12/11/13.
+- I2C bus: `GROVE_SDA=8`, `GROVE_SCL=7`. The firmware's I2C bus config uses these macros.
+- **Not compiled yet.** PlatformIO's tool download fails TLS verification in this sandbox (the proxy CA is not trusted by its HTTP client). Build it on your own machine with `pio run -e my-s3-n16r8`.
+- **Not implemented:** the OLED display driver. The 1.3" I2C OLED will not display anything until a U8g2 SH1106 backend is added.
+
+## Known risk
+
+The ESP-General board header defines `SDA = 8` and `SCL = 9` as Arduino globals. The `SCL = 9` default collides with nRF24 CE (GPIO9) if anything calls `Wire.begin()` with no arguments. A grep of `src/` and `include/` found no such call, but the M5 and Adafruit libraries are not checked. Confirm with a boot test or a serial log before wiring the OLED.
