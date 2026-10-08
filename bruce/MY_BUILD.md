@@ -52,7 +52,7 @@ Resolved: the OLED uses the existing LovyanGFX backend (see Firmware status), no
 - Radios: CC1101 enabled (CSN 15, GDO0 4). nRF24 enabled (CSN 10, CE 9). Shared SPI on 12/11/13.
 - I2C bus: `GROVE_SDA=8`, `GROVE_SCL=7`. The firmware's I2C bus config uses these macros.
 - **Not compiled yet.** PlatformIO's tool download fails TLS verification in this sandbox (the proxy CA is not trusted by its HTTP client). Build it on your own machine with `pio run -e my-s3-n16r8`.
-- **Display:** enabled through the LovyanGFX backend (`USE_LOVYANGFX`, `Panel_SH1106`, `Bus_I2C`, SDA 8, SCL 7, 128x64). LovyanGFX is pinned to develop commit `11cf6a2`. This is **unverified**: it hasn't been compiled or run on hardware.
+- **Display: BROKEN as configured.** `Panel_SH1106` does not exist in LovyanGFX at the pinned commit `11cf6a2` (or on its main branch), so the build will fail. The env's `LOVYAN_PANEL` needs a different driver or a new backend. Before choosing, confirm the controller chip on the OLED (SH1106 or SSD1306).
 - **Layout:** Bruce's UI was designed for 240x135. About 775 references use the screen-size variables and about 47 hard-code 240/135/320, so expect menus to need tuning for 128x64.
 
 ## Known risk
