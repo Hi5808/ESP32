@@ -20,6 +20,8 @@ Bruce is licensed **AGPL-3.0** (see `LICENSE`). Any build I distribute must stay
 
 ## Proposed pin plan (NOT applied yet)
 
+Schematic: [docs/wiring.svg](docs/wiring.svg)
+
 Avoids strapping pins (0, 3, 45, 46), USB (19, 20), and the PSRAM/flash-internal pins (26–37 on N16R8).
 
 | Function | GPIO |
