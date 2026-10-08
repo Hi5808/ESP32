@@ -22,7 +22,7 @@ Bruce is licensed **AGPL-3.0** (see `LICENSE`). Any build I distribute must stay
 
 Schematic: [docs/wiring.svg](docs/wiring.svg)
 
-Power: 3V3 to nRF24, CC1101, and OLED VCC; GND to all of them.
+Power: 5V to nRF24 VCC (its onboard regulator needs input above 3.3 V). 3V3 to CC1101 VCC and OLED VCC (CC1101 is 1.8–3.6 V only). GND to all of them.
 
 | Function | GPIO |
 |---|---|
